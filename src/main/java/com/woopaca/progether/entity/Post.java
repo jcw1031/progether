@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -18,10 +19,10 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
+    @NotBlank(message = "제목을 입력해 주세요.")
     @Size(min = 2, max = 50)
     private String title;
-    @NotNull
+    @NotBlank(message = "내용을 입력해 주세요.")
     @Size(min = 10)
     private String content;
     private String requiredSkills;

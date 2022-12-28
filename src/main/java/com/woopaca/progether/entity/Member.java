@@ -9,7 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -21,14 +22,14 @@ public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
-    @Size(min = 8, max = 30)
+    @NotBlank(message = "이메일을 입력해 주세요.")
+    @Email(message = "이메일을 올바르게 입력해 주세요.")
     private String email;
-    @NotNull
+    @NotBlank(message = "비밀번호를 입력해 주세요.")
     @Size(min = 8, max = 20)
     private String password;
     private String subject;
-    @NotNull
+    @NotBlank(message = "닉네임을 입력해 주세요.")
     @Size(min = 1, max = 20)
     private String name;
     private String skills;
