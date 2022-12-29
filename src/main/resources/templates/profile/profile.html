@@ -1,0 +1,86 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" class="h-100">
+<div th:replace="fragment/common :: head"></div>
+
+<!-- ---------- -->
+
+<body class="d-flex flex-column h-100">
+<!--header-->
+<div th:replace="fragment/common :: header"></div>
+
+<!-- profile card -->
+<section class="vh-100">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col col-lg-6 mb-4 mb-lg-0">
+                <div class="card mb-3" style="border-radius: .5rem;">
+                    <div class="row g-0">
+                        <div class="col-md-4 gradient-custom text-center text-white"
+                             style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+                            <svg xmlns="http://www.w3.org/2000/svg" style="width: 80px;" fill="currentColor"
+                                 class="bi bi-person-circle img-fluid my-5" viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                <path fill-rule="evenodd"
+                                      d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                            </svg>
+
+                            <h5>지찬우</h5>
+                            <p>Back-end</p>
+                            <i class="far fa-edit mb-5">
+                                <div class="justify-content-center">
+                                    <a href="#" th:href="@{/profile/update}">
+                                    <button type="button" class="btn btn-warning mx-1">수정</button>
+                                    </a>
+                                    <a href="#" th:href="@{/profile/delete}">
+                                    <button type="button" class="btn btn-danger mx-1">삭제</button>
+                                    </a>
+                                </div>
+                            </i>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body p-4">
+                                <h6>정보</h6>
+                                <hr class="mt-0 mb-4">
+                                <div class="row pt-1">
+                                    <div class="col-6 mb-3">
+                                        <h6>이메일</h6>
+                                        <p class="text-muted">jcw001031@gmail.com</p>
+                                    </div>
+                                    <div class="col-6 mb-3">
+                                        <h6>학과</h6>
+                                        <p class="text-muted">소프트웨어전공</p>
+                                    </div>
+                                </div>
+                                <h6>활동 내역</h6>
+                                <hr class="mt-0 mb-4">
+                                <div class="row pt-1">
+                                    <div class="col-6 mb-3">
+                                        <h6>게시글 수</h6>
+                                        <p class="text-muted">3</p>
+                                    </div>
+                                    <div class="col-6 mb-3">
+                                        <h6>댓글 수</h6>
+                                        <p class="text-muted">12</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-start">
+                                    <a href="#!"><i class="fab fa-facebook-f fa-lg me-3"></i></a>
+                                    <a href="#!"><i class="fab fa-twitter fa-lg me-3"></i></a>
+                                    <a href="#!"><i class="fab fa-instagram fa-lg"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--footer-->
+<div th:replace="fragment/common :: footer"></div>
+
+<!--script-->
+<div th:replace="fragment/common :: bootstrapScript"></div>
+</body>
+</html>
