@@ -13,6 +13,7 @@
 
     <link href="sticky-footer-navbar.css" th:href="@{/sticky-footer-navbar.css}" rel="stylesheet">
     <link rel="stylesheet" href="#" th:href="@{/profile-card.css}">
+    <link href="signin.css" rel="stylesheet" th:href="@{/signin.css}">
 </head>
 
 <!-- ----------- -->
@@ -20,28 +21,28 @@
 <body>
 
 <!--header-->
-<header th:fragment="header">
+<header th:fragment="header(location)">
     <!-- Fixed navbar -->
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <a class="navbar-brand" href="#" th:href="@{/}">🅿 프게더 </a>
+        <a class="navbar-brand" href="#" th:href="@{/}" style="font-size: x-large">&nbsp; 🅿 프게더 </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#" th:href="@{/}">홈 <span class="sr-only">(current)</span></a>
+                <li class="nav-item" th:classappend="${location} == 'home'? 'active'">
+                    <a class="nav-link" href="#" th:href="@{/}">홈 <span class="sr-only" th:if="${location}=='home'">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" th:href="@{/board}">게시글 </a>
+                <li class="nav-item" th:classappend="${location} == 'board'? 'active'">
+                    <a class="nav-link" href="#" th:href="@{/board}">게시글 <span class="sr-only" th:if="${location}=='board'">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">아직 추가 못함</a>
                 </li>
             </ul>
             <form class="form-inline mt-2 mt-md-0">
-                <a type="button" class="btn btn-secondary mx-5" th:href="@{/profile}">
+                <a type="button" class="btn btn-secondary mx-3" th:href="@{/profile}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                          class="bi bi-person-circle" viewBox="0 0 16 16">
                         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"></path>
@@ -51,7 +52,7 @@
                 </a>
 
                 <button class="btn btn-outline-success mr-sm-2" type="submit">회원가입</button>
-                <button class="btn btn-success my-2 my-sm-0" type="submit">로그인</button>
+                <a class="btn btn-success my-2 my-sm-0" type="submit" th:href="@{/signin}">로그인</a>
             </form>
         </div>
     </nav>
