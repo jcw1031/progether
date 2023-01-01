@@ -9,7 +9,6 @@
 <div th:replace="fragment/common :: header('login')"></div>
 
 <form class="form-signin text-center">
-    <!--    <img class="mb-4" src="/docs/4.6/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">-->
     <svg xmlns="http://www.w3.org/2000/svg" style="width: 72px;" fill="currentColor" class="bi bi-p-square-fill mb-3"
          viewBox="0 0 16 16">
         <path d="M8.27 8.074c.893 0 1.419-.545 1.419-1.488s-.526-1.482-1.42-1.482H6.778v2.97H8.27Z"/>
@@ -20,12 +19,17 @@
     <input type="email" id="inputEmail" class="form-control" placeholder="이메일" required autofocus>
     <label for="inputPassword" class="sr-only">비밀번호</label>
     <input type="password" id="inputPassword" class="form-control" placeholder="비밀번호" required>
-    <!--<div class="checkbox mb-3">
-        <label>
-            <input type="checkbox" value="remember-me"> Remember me
-        </label>
-    </div>-->
-    <button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
+<!--    <button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>-->
+    <span th:if="${userId==null}">
+		<a href="https://kauth.kakao.com/oauth/authorize?client_id={client_id}&redirect_uri=http://localhost:8080/login&response_type=code">
+			<img src="/img/kakao_login.png" style="width: 300px">
+		</a>
+	</span>
+    <span th:if="${userId!=null}">
+		<form name="logout" action="http://localhost:8080/logout">
+			<input type="submit" value="로그아웃">
+		</form>
+	</span>
 </form>
 
 <!-- footer -->
