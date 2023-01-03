@@ -21,7 +21,7 @@
     <input type="password" id="inputPassword" class="form-control" placeholder="비밀번호" required>
     <button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>-->
     <span th:if="${userId==null}">
-		<a href="https://kauth.kakao.com/oauth/authorize?client_id={client_id}&redirect_uri=http://localhost:8080/login&response_type=code">
+		<a href="https://kauth.kakao.com/oauth/authorize?client_id={REST API 키}&redirect_uri=http://localhost:8080/login&response_type=code">
 			<img src="/img/kakao_login.png" style="width: 300px" class="mt-3">
 		</a>
 	</span>
