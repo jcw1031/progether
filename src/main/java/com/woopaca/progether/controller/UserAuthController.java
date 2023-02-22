@@ -17,13 +17,18 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/users")
 @RequiredArgsConstructor
 @Slf4j
-public class UserController {
+public class UserAuthController {
 
     private final UserService userService;
 
+    @GetMapping("/sign-up")
+    public String signUpForm() {
+        return "auth/sign-up";
+    }
+
     @GetMapping("/sign-in")
     public String signInForm() {
-        return "sign/signIn";
+        return "auth/sign-in";
     }
 
     @PostMapping("/sign-in")
@@ -34,10 +39,5 @@ public class UserController {
         Cookie cookie = new Cookie("access_token", token);
         response.addCookie(cookie);
         return "redirect:/";
-    }
-
-    @GetMapping("/profile")
-    public String profileMain() {
-        return "profile/profile";
     }
 }
