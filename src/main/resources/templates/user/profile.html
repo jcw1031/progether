@@ -23,11 +23,11 @@
                                 <path fill-rule="evenodd"
                                       d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
                             </svg>
-                            <h5>지찬우</h5>
-                            <p>Back-end</p>
+                            <h5 th:text="${user.name}">지찬우</h5>
+                            <p th:text="${user.part}">Back-end</p>
                             <i class="far fa-edit mb-5">
                                 <div class="justify-content-center mb-3">
-                                    <a href="#" th:href="@{/profile/update}">
+                                    <a href="#" th:href="@{/templates/user/update}">
                                         <button type="button" class="btn btn-warning mx-1">수정</button>
                                     </a>
                                     <button type="button" class="btn btn-danger mx-1" data-toggle="modal"
@@ -43,11 +43,11 @@
                                 <div class="row pt-1">
                                     <div class="col-6 mb-3">
                                         <h6>이메일</h6>
-                                        <p class="text-muted">jcw001031@gmail.com</p>
+                                        <p class="text-muted" th:text="${user.email}">jcw001031@gmail.com</p>
                                     </div>
                                     <div class="col-6 mb-3">
                                         <h6>학과</h6>
-                                        <p class="text-muted">소프트웨어전공</p>
+                                        <p class="text-muted" th:text="${user.subject}">소프트웨어전공</p>
                                     </div>
                                 </div>
                                 <h6>활동 내역</h6>
@@ -55,7 +55,7 @@
                                 <div class="row pt-1">
                                     <div class="col-6 mb-3">
                                         <h6>게시글 수</h6>
-                                        <p class="text-muted">3</p>
+                                        <p class="text-muted" th:text="${user.postNumber}">3</p>
                                     </div>
                                     <div class="col-6 mb-3">
                                         <h6>댓글 수</h6>
@@ -63,7 +63,7 @@
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-start">
-                                    <a href="#" class="text-decoration-none" th:href="@{https://github.com/jcw1031}"
+                                    <a href="#" class="text-decoration-none" th:href="@{|${user.website}|}"
                                        th:target="_blank" style="color: #d9d9d9;">
                                         Website
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"

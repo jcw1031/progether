@@ -1,4 +1,4 @@
-package com.woopaca.progether.controller.dto;
+package com.woopaca.progether.controller.user.dto;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

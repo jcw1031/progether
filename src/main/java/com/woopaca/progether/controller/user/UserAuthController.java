@@ -1,8 +1,8 @@
-package com.woopaca.progether.controller;
+package com.woopaca.progether.controller.user;
 
 import com.woopaca.progether.config.jwt.JwtAuthenticationValidator;
-import com.woopaca.progether.controller.dto.SignInRequestDto;
-import com.woopaca.progether.controller.dto.SignUpRequestDto;
+import com.woopaca.progether.controller.user.dto.SignInRequestDto;
+import com.woopaca.progether.controller.user.dto.SignUpRequestDto;
 import com.woopaca.progether.exception.user.UserException;
 import com.woopaca.progether.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -67,7 +67,7 @@ public class UserAuthController {
                     .addFlashAttribute("errorMessage", e.getUserError().getMessage());
             return "redirect:/users/sign-in";
         }
-        redirectAttributes.addFlashAttribute("signInSuccess", true);
+        redirectAttributes.addFlashAttribute("signInStatus", true);
         response.setHeader("Authorization", token);
         Cookie cookie = new Cookie("access_token", token);
         cookie.setDomain("localhost");
