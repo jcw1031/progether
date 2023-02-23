@@ -1,9 +1,11 @@
 package com.woopaca.progether.entity;
 
+import com.woopaca.progether.controller.dto.SignUpRequestDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.mindrot.jbcrypt.BCrypt;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -43,5 +45,13 @@ public class User {
         this.introduce = introduce;
         this.website = website;
         this.postsNumber = postsNumber;
+    }
+
+    public static User from(SignUpRequestDto signUpRequestDto) {
+        return User.builder()
+                .email(signUpRequestDto.getEmail())
+                .password(BCrypt.hashpw(signUpRequestDto.getPassword(), BCrypt.gensalt()))
+                .name(signUpRequestDto.getName())
+                .build();
     }
 }

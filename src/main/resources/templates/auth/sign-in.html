@@ -33,9 +33,14 @@
     </form>
 </main>
 
-<div th:if="${signInStatus == false}" class="alert alert-danger mx-3" role="alert">
+<div th:if="${signInSuccess == false}" class="alert alert-danger mx-3" role="alert" th:text="${errorMessage}">
     이메일 또는 비밀번호가 일치하지 않습니다!
 </div>
+
+<div th:if="${signUpSuccess == true}" class="alert alert-success mx-3" role="alert">
+    회원가입이 완료되었습니다!
+</div>
+
 <!-- footer -->
 <div th:replace="fragment/common :: footer"></div>
 
