@@ -29,15 +29,18 @@ public class UserAuthController {
     private final JwtAuthenticationValidator jwtAuthenticationValidator;
 
     @GetMapping("/sign-up")
-    public String signUpForm(@CookieValue(name = "access_token", required = false) final String token,
-                             final Model model) {
+    public String signUpForm(
+            @CookieValue(name = "access_token", required = false) final String token,
+            final Model model) {
         validateToken(token, model);
         return "auth/sign-up";
     }
 
     @PostMapping("/sign-up")
-    public String signUp(@ModelAttribute final SignUpRequestDto signUpRequestDto,
-                         final RedirectAttributes redirectAttributes) {
+    public String signUp(
+            @ModelAttribute final SignUpRequestDto signUpRequestDto,
+            final RedirectAttributes redirectAttributes
+    ) {
         try {
             userService.signUp(signUpRequestDto);
         } catch (UserException e) {
@@ -50,15 +53,19 @@ public class UserAuthController {
     }
 
     @GetMapping("/sign-in")
-    public String signInForm(@CookieValue(name = "access_token", required = false) final String token,
-                             final Model model) {
+    public String signInForm(
+            @CookieValue(name = "access_token", required = false) final String token,
+            final Model model
+    ) {
         validateToken(token, model);
         return "auth/sign-in";
     }
 
     @PostMapping("/sign-in")
-    public String signIn(@ModelAttribute final SignInRequestDto signInRequestDto,
-                         final HttpServletResponse response, final RedirectAttributes redirectAttributes) {
+    public String signIn(
+            @ModelAttribute final SignInRequestDto signInRequestDto,
+            final HttpServletResponse response, final RedirectAttributes redirectAttributes
+    ) {
         String token;
         try {
             token = userService.signIn(signInRequestDto);
@@ -72,6 +79,7 @@ public class UserAuthController {
         Cookie cookie = new Cookie("access_token", token);
         cookie.setDomain("localhost");
         cookie.setPath("/");
+        cookie.setMaxAge(60 * 60 * 3);
         response.addCookie(cookie);
         return "redirect:/";
     }
