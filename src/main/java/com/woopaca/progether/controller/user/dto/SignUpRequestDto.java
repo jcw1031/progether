@@ -1,4 +1,4 @@
-package com.woopaca.progether.controller.dto;
+package com.woopaca.progether.controller.user.dto;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,5 +12,6 @@ public class SignUpRequestDto {
 
     private String email;
     private String password;
+    private String checkPassword;
     private String name;
 }

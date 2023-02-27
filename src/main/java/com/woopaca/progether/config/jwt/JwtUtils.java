@@ -1,5 +1,8 @@
 package com.woopaca.progether.config.jwt;
 
+import com.woopaca.progether.entity.User;
+import com.woopaca.progether.exception.user.impl.UserNotFoundException;
+import com.woopaca.progether.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -16,6 +19,8 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class JwtUtils {
 
+    private final UserRepository userRepository;
+
     @Value("${jwt.secret_key}")
     private String secretKey;
 
@@ -29,6 +34,15 @@ public class JwtUtils {
                 .setSigningKey(secretKey)
                 .parseClaimsJws(token)
                 .getBody().getSubject();
+    }
+
+    public User getUserOfToken(String token) {
+        String email = Jwts.parser()
+                .setSigningKey(secretKey)
+                .parseClaimsJws(token)
+                .getBody().getSubject();
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException());
     }
 
     public String resolveToken(String authorization) {

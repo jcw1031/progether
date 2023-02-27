@@ -1,6 +1,8 @@
 package com.woopaca.progether.entity;
 
-import com.woopaca.progether.controller.dto.SignUpRequestDto;
+import com.woopaca.progether.controller.user.dto.ProfileUpdateRequestDto;
+import com.woopaca.progether.controller.user.dto.SignUpRequestDto;
+import com.woopaca.progether.controller.user.dto.UserProfileResponseDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,18 +31,20 @@ public class User {
     private String subject;
     @Column(nullable = false)
     private String name;
+    private String part;
     private String skills;
     private String introduce;
     private String website;
     private int postsNumber;
 
     @Builder
-    public User(String email, String password, String subject, String name, String skills,
+    public User(String email, String password, String subject, String name, String part, String skills,
                 String introduce, String website, int postsNumber) {
         this.email = email;
         this.password = password;
         this.subject = subject;
         this.name = name;
+        this.part = part;
         this.skills = skills;
         this.introduce = introduce;
         this.website = website;
@@ -52,6 +56,24 @@ public class User {
                 .email(signUpRequestDto.getEmail())
                 .password(BCrypt.hashpw(signUpRequestDto.getPassword(), BCrypt.gensalt()))
                 .name(signUpRequestDto.getName())
+                .build();
+    }
+
+    public void updateUserProfile(ProfileUpdateRequestDto profileUpdateRequestDto) {
+        subject = profileUpdateRequestDto.getSubject();
+        part = profileUpdateRequestDto.getPart();
+        introduce = profileUpdateRequestDto.getIntroduction();
+        website = profileUpdateRequestDto.getWebsite();
+    }
+
+    public UserProfileResponseDto toProfileDto() {
+        return UserProfileResponseDto.builder()
+                .email(email)
+                .name(name)
+                .part(part)
+                .subject(subject)
+                .website(website)
+                .postNumber(postsNumber)
                 .build();
     }
 }

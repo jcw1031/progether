@@ -24,7 +24,7 @@ public class JwtAuthenticationValidator {
         }
 
         String email = jwtUtils.getEmailInToken(token);
-        log.info("sign-in success! Email = {}", email);
+        log.info("sign-in user's email = {}", email);
         return true;
     }
 }
