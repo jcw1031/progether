@@ -8,10 +8,12 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class SignUpRequestDto {
+public class ProfileUpdateRequestDto {
 
-    private String email;
+    private String subject;
     private String password;
     private String checkPassword;
-    private String name;
+    private String part;
+    private String introduction;
+    private String website;
 }

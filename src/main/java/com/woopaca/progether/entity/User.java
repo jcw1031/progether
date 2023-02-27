@@ -1,5 +1,6 @@
 package com.woopaca.progether.entity;
 
+import com.woopaca.progether.controller.user.dto.ProfileUpdateRequestDto;
 import com.woopaca.progether.controller.user.dto.SignUpRequestDto;
 import com.woopaca.progether.controller.user.dto.UserProfileResponseDto;
 import lombok.AccessLevel;
@@ -56,6 +57,13 @@ public class User {
                 .password(BCrypt.hashpw(signUpRequestDto.getPassword(), BCrypt.gensalt()))
                 .name(signUpRequestDto.getName())
                 .build();
+    }
+
+    public void updateUserProfile(ProfileUpdateRequestDto profileUpdateRequestDto) {
+        subject = profileUpdateRequestDto.getSubject();
+        part = profileUpdateRequestDto.getPart();
+        introduce = profileUpdateRequestDto.getIntroduction();
+        website = profileUpdateRequestDto.getWebsite();
     }
 
     public UserProfileResponseDto toProfileDto() {
