@@ -16,8 +16,10 @@ public class MainController {
     private final JwtAuthenticationValidator jwtAuthenticationValidator;
 
     @GetMapping("")
-    public String home(@CookieValue(name = "access_token", required = false) final String token,
-                       final Model model) {
+    public String home(
+            @CookieValue(name = "access_token", required = false) final String token,
+            final Model model
+    ) {
         log.info("access_token = {}", token);
         boolean signInStatus = jwtAuthenticationValidator.validateToken(token);
         model.addAttribute("signInStatus", signInStatus);

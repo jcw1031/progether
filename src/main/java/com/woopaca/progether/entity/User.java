@@ -33,20 +33,20 @@ public class User {
     private String name;
     private String part;
     private String skills;
-    private String introduce;
+    private String introduction;
     private String website;
     private int postsNumber;
 
     @Builder
     public User(String email, String password, String subject, String name, String part, String skills,
-                String introduce, String website, int postsNumber) {
+                String introduction, String website, int postsNumber) {
         this.email = email;
         this.password = password;
         this.subject = subject;
         this.name = name;
         this.part = part;
         this.skills = skills;
-        this.introduce = introduce;
+        this.introduction = introduction;
         this.website = website;
         this.postsNumber = postsNumber;
     }
@@ -62,7 +62,7 @@ public class User {
     public void updateUserProfile(ProfileUpdateRequestDto profileUpdateRequestDto) {
         subject = profileUpdateRequestDto.getSubject();
         part = profileUpdateRequestDto.getPart();
-        introduce = profileUpdateRequestDto.getIntroduction();
+        introduction = profileUpdateRequestDto.getIntroduction();
         website = profileUpdateRequestDto.getWebsite();
     }
 

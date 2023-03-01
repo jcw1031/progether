@@ -84,6 +84,16 @@ public class UserAuthController {
         return "redirect:/";
     }
 
+    @GetMapping("/sign-out")
+    public String signOut(final HttpServletResponse response) {
+        Cookie cookie = new Cookie("access_token", null);
+        cookie.setDomain("localhost");
+        cookie.setPath("/");
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        return "redirect:/";
+    }
+
     private void validateToken(final String token, final Model model) {
         boolean signInStatus = jwtAuthenticationValidator.validateToken(token);
         model.addAttribute("signInStatus", signInStatus);
