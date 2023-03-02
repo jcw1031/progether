@@ -17,24 +17,41 @@
             <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2Zm3.5 4.002h2.962C10.045 4.002 11 5.104 11 6.586c0 1.494-.967 2.578-2.55 2.578H6.784V12H5.5V4.002Z"/>
         </svg>
         <h1 class="h3 mb-3 font-weight-normal" style="text-align: center">회원 정보 수정</h1>
-        <input th:value="${user.subject}" type="text" id="subject" name="subject" class="form-control mb-3"
+        <input th:if="${profileUpdateRequestDto == null}" th:value="${user.subject}" type="text" id="subject"
+               name="subject" class="form-control mb-3"
+               placeholder="학과"
+               autofocus>
+        <input th:if="${profileUpdateSuccess == false}" th:value="${profileUpdateRequestDto.subject}" type="text"
+               id="subject" name="subject" class="form-control mb-3"
                placeholder="학과"
                autofocus>
         <input type="password" id="password" name="password" class="form-control mb-3" placeholder="비밀번호" required>
         <input type="password" id="checkPassword" name="checkPassword" class="form-control mb-3"
                placeholder="비밀번호 확인"
                required>
-        <input th:value="${user.part}" type="text" id="part" name="part" class="form-control mb-3" placeholder="개발 직군">
-        <textarea th:value="${user.getIntroduction}" class="form-control mb-3" id="introduction" name="introduction"
+        <input th:if="${profileUpdateRequestDto == null}" th:value="${user.part}" type="text" id="part" name="part"
+               class="form-control mb-3"
+               placeholder="개발 직군">
+        <input th:if="${profileUpdateSuccess == false}" th:value="${profileUpdateRequestDto.part}"
+               type="text" id="part" name="part" class="form-control mb-3" placeholder="개발 직군">
+        <textarea th:if="${profileUpdateRequestDto == null}" th:text="${user.getIntroduction}"
+                  class="form-control mb-3" id="introduction" name="introduction"
                   rows="5" placeholder="소개"></textarea>
-        <input th:value="${user.website}" type="url" id="website" name="website" class="form-control mb-3"
+        <textarea th:if="${profileUpdateSuccess == false}" th:text="${profileUpdateRequestDto.introduction}"
+                  class="form-control mb-3" id="introduction" name="introduction"
+                  rows="5" placeholder="소개"></textarea>
+        <input th:if="${profileUpdateRequestDto == null}" th:value="${user.website}" type="url" id="website"
+               name="website" class="form-control mb-3"
+               placeholder="웹사이트">
+        <input th:if="${profileUpdateSuccess == false}" th:value="${profileUpdateRequestDto.website}"
+               type="url" id="website" name="website" class="form-control mb-3"
                placeholder="웹사이트">
         <button class="w-100 btn btn-lg btn-primary mt-3 mb-3" type="submit">정보 수정</button>
     </form>
 </main>
 
-<div th:if="${signUpSuccess == false}" class="alert alert-danger mx-3" role="alert" th:text="${errorMessage}">
-    회원가입 실패!
+<div th:if="${profileUpdateSuccess == false}" class="alert alert-danger mx-3" role="alert" th:text="${errorMessage}">
+    회원 정보 수정 실패!
 </div>
 
 <!-- footer -->

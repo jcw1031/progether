@@ -5,6 +5,7 @@ import com.woopaca.progether.config.jwt.JwtUtils;
 import com.woopaca.progether.controller.user.dto.ProfileUpdateRequestDto;
 import com.woopaca.progether.controller.user.dto.UserProfileResponseDto;
 import com.woopaca.progether.entity.User;
+import com.woopaca.progether.exception.user.UserException;
 import com.woopaca.progether.service.UserService;
 import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/users")
@@ -56,14 +58,22 @@ public class UserController {
     @PostMapping("/update")
     public String userUpdate(
             @ModelAttribute ProfileUpdateRequestDto profileUpdateRequestDto,
-            @CookieValue(name = "access_token", required = false) final String token, final Model model
+            @CookieValue(name = "access_token", required = false) final String token, final Model model,
+            final RedirectAttributes redirectAttributes
     ) {
         try {
             validateToken(token, model);
         } catch (JwtException e) {
             return "redirect:/";
         }
-        userService.userUpdate(profileUpdateRequestDto, token);
+        try {
+            userService.userUpdate(profileUpdateRequestDto, token);
+        } catch (UserException e) {
+            redirectAttributes.addFlashAttribute("profileUpdateSuccess", false)
+                    .addFlashAttribute("errorMessage", e.getUserError().getMessage())
+                    .addFlashAttribute("profileUpdateRequestDto", profileUpdateRequestDto);
+            return "redirect:/users/update";
+        }
         return "redirect:/users/profile";
     }
 

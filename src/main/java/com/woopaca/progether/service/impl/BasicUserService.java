@@ -14,6 +14,7 @@ import com.woopaca.progether.exception.user.impl.UserNotFoundException;
 import com.woopaca.progether.repository.UserRepository;
 import com.woopaca.progether.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Slf4j
 public class BasicUserService implements UserService {
 
     private final UserRepository userRepository;

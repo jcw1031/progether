@@ -45,7 +45,8 @@ public class UserAuthController {
             userService.signUp(signUpRequestDto);
         } catch (UserException e) {
             redirectAttributes.addFlashAttribute("signUpSuccess", false)
-                    .addFlashAttribute("errorMessage", e.getUserError().getMessage());
+                    .addFlashAttribute("errorMessage", e.getUserError().getMessage())
+                    .addFlashAttribute("signUpRequestDto", signUpRequestDto);
             return "redirect:/users/sign-up";
         }
         redirectAttributes.addFlashAttribute("signUpSuccess", true);

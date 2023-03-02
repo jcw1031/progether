@@ -17,12 +17,20 @@
             <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2Zm3.5 4.002h2.962C10.045 4.002 11 5.104 11 6.586c0 1.494-.967 2.578-2.55 2.578H6.784V12H5.5V4.002Z"/>
         </svg>
         <h1 class="h3 mb-3 font-weight-normal" style="text-align: center">어서오세요!</h1>
-        <input type="email" id="email" name="email" class="form-control mb-3" placeholder="이메일" required autofocus>
+        <input th:if="${signUpRequestDto != null}" th:value="${signUpRequestDto.email}" type="email" id="email"
+               name="email" class="form-control mb-3"
+               placeholder="이메일" required autofocus>
+        <input th:if="${signUpRequestDto == null}" type="email" id="email" name="email" class="form-control mb-3"
+               placeholder="이메일" required autofocus>
         <input type="password" id="password" name="password" class="form-control mb-3" placeholder="비밀번호" required>
-        <input type="password" id="passwordCheck" name="passwordCheck" class="form-control mb-3"
+        <input type="password" id="checkPassword" name="checkPassword" class="form-control mb-3"
                placeholder="비밀번호 확인"
                required>
-        <input type="text" id="name" name="name" class="form-control mb-3" placeholder="이름(닉네임)" required>
+        <input th:if="${signUpRequestDto != null}" th:value="${signUpRequestDto.name}" type="text" id="name" name="name"
+               class="form-control mb-3"
+               placeholder="이름(닉네임)" required>
+        <input th:if="${signUpRequestDto == null}" type="text" id="name" name="name" class="form-control mb-3"
+               placeholder="이름(닉네임)" required>
         <button class="w-100 btn btn-lg btn-primary mt-5" type="submit">회원가입</button>
     </form>
 </main>
