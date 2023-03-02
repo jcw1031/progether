@@ -9,11 +9,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.mindrot.jbcrypt.BCrypt;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -36,6 +40,9 @@ public class User {
     private String introduction;
     private String website;
     private int postsNumber;
+
+    @OneToMany(mappedBy = "writer", cascade = CascadeType.REMOVE)
+    private List<Post> posts = new ArrayList<>();
 
     @Builder
     public User(String email, String password, String subject, String name, String part, String skills,
