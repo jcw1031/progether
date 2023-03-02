@@ -31,12 +31,13 @@ public class UserController {
     public String userProfile(
             @CookieValue(name = "access_token", required = false) final String token, final Model model
     ) {
+        UserProfileResponseDto userProfileResponseDto;
         try {
             validateToken(token, model);
-        } catch (JwtException e) {
-            return "redirect:/";
+            userProfileResponseDto = userService.userInfo(token);
+        } catch (JwtException | UserException e) {
+            return "redirect:/users/sign-out";
         }
-        UserProfileResponseDto userProfileResponseDto = userService.userInfo(token);
         model.addAttribute("user", userProfileResponseDto);
         return "user/profile";
     }
@@ -48,7 +49,7 @@ public class UserController {
         try {
             validateToken(token, model);
         } catch (JwtException e) {
-            return "redirect:/";
+            return "redirect:/users/sign-out";
         }
         User user = jwtUtils.getUserOfToken(token);
         model.addAttribute("user", user);
@@ -64,7 +65,7 @@ public class UserController {
         try {
             validateToken(token, model);
         } catch (JwtException e) {
-            return "redirect:/";
+            return "redirect:/users/sign-out";
         }
         try {
             userService.userUpdate(profileUpdateRequestDto, token);

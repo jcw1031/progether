@@ -9,7 +9,7 @@
 <div th:replace="fragment/common :: header('sign-up')"></div>
 
 <main class="form-group w-100 m-auto px-5">
-    <form class="text-center mx-5 px-5 mt-5" th:action="@{/users/sign-up}" method="post" data-bs-theme="dark">
+    <form class="text-center mx-5 px-5 mt-5" th:action="@{/users/sign-up}" method="post">
         <svg xmlns="http://www.w3.org/2000/svg" style="width: 72px;" fill="currentColor"
              class="bi bi-p-square-fill mb-3"
              viewBox="0 0 16 16">
@@ -35,7 +35,7 @@
     </form>
 </main>
 
-<div th:if="${signUpSuccess == false}" class="alert alert-danger mx-3" role="alert" th:text="${errorMessage}">
+<div th:if="${signUpSuccess == false}" class="alert alert-danger mx-5" role="alert" th:text="${errorMessage}">
     회원가입 실패!
 </div>
 

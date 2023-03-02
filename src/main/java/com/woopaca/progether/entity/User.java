@@ -74,12 +74,14 @@ public class User {
     }
 
     public UserProfileResponseDto toProfileDto() {
+        String introduction = this.introduction.replace("\n", "</br>");
         return UserProfileResponseDto.builder()
                 .email(email)
                 .name(name)
                 .part(part)
                 .subject(subject)
                 .website(website)
+                .introduction(introduction)
                 .postNumber(postsNumber)
                 .build();
     }
