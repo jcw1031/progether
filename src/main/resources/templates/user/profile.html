@@ -4,7 +4,7 @@
 
 <!-- ---------- -->
 
-<body class="d-flex flex-column h-100">
+<body class="d-flex flex-column h-100 bg-dark text-light">
 <!--header-->
 <div th:replace="fragment/common :: header('')"></div>
 
@@ -13,7 +13,7 @@
     <div class="container pt-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100 pt-3">
             <div class="col col-lg-6 my-4 mb-lg-0">
-                <div class="card mb-3" style="border-radius: .5rem;">
+                <div class="card mb-3" style="border-radius: .5rem;" data-bs-theme="dark">
                     <div class="row g-0">
                         <div class="col-md-4 gradient-custom text-center text-white"
                              style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
@@ -23,15 +23,16 @@
                                 <path fill-rule="evenodd"
                                       d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
                             </svg>
-                            <h5 th:text="${user.name}">지찬우</h5>
-                            <p th:text="${user.part}">Back-end</p>
+                            <h5 th:text="${user.name}">Name</h5>
+                            <p th:text="${user.part}">Part</p>
                             <i class="far fa-edit mb-5">
                                 <div class="justify-content-center mb-3">
-                                    <a href="#" th:href="@{/users/update}">
-                                        <button type="button" class="btn btn-warning mx-1">수정</button>
-                                    </a>
-                                    <button type="button" class="btn btn-danger mx-1" data-toggle="modal"
-                                            data-target="#withdrawalModal">탈퇴
+                                    <button type="button" class="btn btn-warning mx-1"
+                                            th:onclick="|location.href='@{/users/update}'|">수정
+                                    </button>
+                                    <button type="button" class="btn btn-danger mx-1" data-bs-toggle="modal"
+                                            data-bs-target="#withdrawalModal">
+                                        탈퇴
                                     </button>
                                 </div>
                             </i>
@@ -40,14 +41,15 @@
                             <div class="card-body p-4">
                                 <h6>정보</h6>
                                 <hr class="mt-0 mb-4">
-                                <div class="row pt-1">
+                                <div class="row pt-1 text-light">
                                     <div class="col-6 mb-3">
                                         <h6>이메일</h6>
-                                        <p class="text-muted" th:text="${user.email}">jcw001031@gmail.com</p>
+                                        <p class="text-muted" style="color: #d9d9d9" th:text="${user.email}">Email</p>
                                     </div>
                                     <div class="col-6 mb-3">
                                         <h6>학과</h6>
-                                        <p class="text-muted" th:text="${user.subject}">소프트웨어전공</p>
+                                        <p class="text-muted" style="color: #d9d9d9" th:text="${user.subject}">
+                                            Subject</p>
                                     </div>
                                 </div>
                                 <h6>활동 내역</h6>
@@ -55,11 +57,12 @@
                                 <div class="row pt-1">
                                     <div class="col-6 mb-3">
                                         <h6>게시글 수</h6>
-                                        <p class="text-muted" th:text="${user.postNumber}">3</p>
+                                        <p class="text-muted" style="color: #d9d9d9" th:text="${user.postNumber}">
+                                            NumberOfPosts</p>
                                     </div>
                                     <div class="col-6 mb-3">
                                         <h6>댓글 수</h6>
-                                        <p class="text-muted">12</p>
+                                        <p class="text-muted" style="color: #d9d9d9">NumberOfComments</p>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-start">
@@ -83,20 +86,19 @@
 </section>
 
 <!-- Modal -->
-<div class="modal fade" id="withdrawalModal" tabindex="-1" aria-labelledby="withdrawalModalLabel" aria-hidden="true">
+<div class="modal fade" id="withdrawalModal" tabindex="-1" aria-labelledby="withdrawalModalLabel" aria-hidden="true"
+     data-bs-theme="dark">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="withdrawalModalLabel">주의❗️</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">주의❗️</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 정말 탈퇴하시겠습니까?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                 <button type="button" class="btn btn-danger">탈퇴</button>
             </div>
         </div>
