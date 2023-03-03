@@ -74,7 +74,9 @@ public class User {
     }
 
     public UserProfileResponseDto toProfileDto() {
-        String introduction = this.introduction.replace("\n", "</br>");
+        if (introduction != null) {
+            String introduction = this.introduction.replace("\n", "</br>");
+        }
         return UserProfileResponseDto.builder()
                 .email(email)
                 .name(name)
