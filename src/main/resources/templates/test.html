@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" class="h-100">
+<div th:replace="fragment/common :: head"></div>
+<body>
+<h1>개발자 스킬 선택</h1>
+<form th:action="@{/test}" method="post">
+    <div class="form-group">
+        <label for="skills">Select your developer skills:</label>
+        <select class="form-control" id="skills" name="skills[]" multiple>
+            <option value="HTML">HTML</option>
+            <option value="CSS">CSS</option>
+            <option value="JavaScript">JavaScript</option>
+            <option value="PHP">PHP</option>
+            <option value="Python">Python</option>
+            <option value="Ruby">Ruby</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<script>
+    function showSkills() {
+        const selectElement = document.getElementById('skills');
+        const selectedOptions = Array.from(selectElement.selectedOptions).map(option => option.value);
+        alert(`선택한 스킬: ${selectedOptions}`);
+    }
+</script>
+</body>
+</html>

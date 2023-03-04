@@ -10,11 +10,14 @@ import lombok.NoArgsConstructor;
 import org.mindrot.jbcrypt.BCrypt;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,23 +39,26 @@ public class User {
     @Column(nullable = false)
     private String name;
     private String part;
-    private String skills;
     private String introduction;
     private String website;
     private int postsNumber;
+
+    @ElementCollection
+    @CollectionTable(name = "skill", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "skill_name")
+    private List<String> skills;
 
     @OneToMany(mappedBy = "writer", cascade = CascadeType.REMOVE)
     private List<Post> posts = new ArrayList<>();
 
     @Builder
-    public User(String email, String password, String subject, String name, String part, String skills,
+    public User(String email, String password, String subject, String name, String part,
                 String introduction, String website, int postsNumber) {
         this.email = email;
         this.password = password;
         this.subject = subject;
         this.name = name;
         this.part = part;
-        this.skills = skills;
         this.introduction = introduction;
         this.website = website;
         this.postsNumber = postsNumber;

@@ -7,6 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -25,5 +29,21 @@ public class MainController {
         model.addAttribute("signInStatus", signInStatus);
         log.info("signInStatus = {}", signInStatus);
         return "index";
+    }
+
+    @GetMapping("/test")
+    public String test() {
+        return "test";
+    }
+
+    @PostMapping("/test")
+    public String testPost(@RequestParam(name = "skills[]") List<String> skills) {
+        log.info("skills.get(1) = {}", skills.get(1));
+        return "redirect:/";
+    }
+
+    @GetMapping("/multi-select")
+    public String multiSelect() {
+        return "multi-select";
     }
 }

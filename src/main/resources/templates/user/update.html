@@ -9,14 +9,15 @@
 <div th:replace="fragment/common :: header('login')"></div>
 
 <main class="form-group w-100 m-auto">
-    <form class="text-center mx-5 px-5 mt-5" th:action="@{/users/update}" method="post">
+
+    <form class="form-sign-up text-center" th:action="@{/users/update}" method="post">
         <svg xmlns="http://www.w3.org/2000/svg" style="width: 72px;" fill="currentColor"
              class="bi bi-p-square-fill mb-3"
              viewBox="0 0 16 16">
             <path d="M8.27 8.074c.893 0 1.419-.545 1.419-1.488s-.526-1.482-1.42-1.482H6.778v2.97H8.27Z"/>
             <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2Zm3.5 4.002h2.962C10.045 4.002 11 5.104 11 6.586c0 1.494-.967 2.578-2.55 2.578H6.784V12H5.5V4.002Z"/>
         </svg>
-        <h1 class="h3 mb-3 font-weight-normal" style="text-align: center">회원 정보 수정</h1>
+        <h1 class="h3 mb-3 font-weight-normal" style="text-align: center">✍️ 회원 정보 수정 ✍️</h1>
         <input th:if="${profileUpdateRequestDto == null}" th:value="${user.subject}" type="text" id="subject"
                name="subject" class="form-control mb-3"
                placeholder="학과"
@@ -25,10 +26,6 @@
                id="subject" name="subject" class="form-control mb-3"
                placeholder="학과"
                autofocus>
-        <input type="password" id="password" name="password" class="form-control mb-3" placeholder="비밀번호" required>
-        <input type="password" id="checkPassword" name="checkPassword" class="form-control mb-3"
-               placeholder="비밀번호 확인"
-               required>
         <input th:if="${profileUpdateRequestDto == null}" th:value="${user.part}" type="text" id="part" name="part"
                class="form-control mb-3"
                placeholder="개발 직군">

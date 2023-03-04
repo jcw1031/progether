@@ -9,14 +9,16 @@
 <div th:replace="fragment/common :: header('sign-up')"></div>
 
 <main class="form-group w-100 m-auto px-5">
-    <form class="text-center m-auto with-100" th:action="@{/users/sign-up}" method="post">
+
+    <form class="form-sign-up text-center" th:action="@{/users/sign-up}" method="post">
         <svg xmlns="http://www.w3.org/2000/svg" style="width: 72px;" fill="currentColor"
              class="bi bi-p-square-fill mb-3"
              viewBox="0 0 16 16">
             <path d="M8.27 8.074c.893 0 1.419-.545 1.419-1.488s-.526-1.482-1.42-1.482H6.778v2.97H8.27Z"/>
             <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2Zm3.5 4.002h2.962C10.045 4.002 11 5.104 11 6.586c0 1.494-.967 2.578-2.55 2.578H6.784V12H5.5V4.002Z"/>
         </svg>
-        <h1 class="h3 mb-3 font-weight-normal" style="text-align: center">어서오세요!</h1>
+        <h1 class="h2 mb-3 font-weight-normal" style="text-align: center">회원가입</h1>
+        <h3 class="h5 mb-3" style="text-align: center">정보를 잘 입력해 주세요 😊</h3>
         <input th:if="${signUpRequestDto != null}" th:value="${signUpRequestDto.email}" type="email" id="email"
                name="email" class="form-control mb-3"
                placeholder="이메일" required autofocus>
