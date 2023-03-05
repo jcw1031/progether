@@ -8,9 +8,12 @@
 <!-- header -->
 <div th:replace="fragment/common :: header('login')"></div>
 
-<main class="form-group w-100 m-auto">
-
-    <form class="form-sign-up text-center" th:action="@{/users/update}" method="post">
+<main class="form-group w-100 mt-5">
+    <div th:if="${profileUpdateSuccess == false}" class="alert alert-danger mt-5 mx-2" role="alert"
+         th:text="${errorMessage}">
+        회원 정보 수정 실패!
+    </div>
+    <form class="form-sign-up text-center mt-5" th:action="@{/users/update}" method="post">
         <svg xmlns="http://www.w3.org/2000/svg" style="width: 72px;" fill="currentColor"
              class="bi bi-p-square-fill mb-3"
              viewBox="0 0 16 16">
@@ -46,10 +49,6 @@
         <button class="w-100 btn btn-lg btn-primary mt-3 mb-3" type="submit">정보 수정</button>
     </form>
 </main>
-
-<div th:if="${profileUpdateSuccess == false}" class="alert alert-danger mx-3" role="alert" th:text="${errorMessage}">
-    회원 정보 수정 실패!
-</div>
 
 <!-- footer -->
 <div th:replace="fragment/common :: footer"></div>

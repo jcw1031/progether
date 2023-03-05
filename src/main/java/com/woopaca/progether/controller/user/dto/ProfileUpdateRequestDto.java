@@ -11,8 +11,6 @@ import lombok.NoArgsConstructor;
 public class ProfileUpdateRequestDto {
 
     private String subject;
-    private String password;
-    private String checkPassword;
     private String part;
     private String introduction;
     private String website;

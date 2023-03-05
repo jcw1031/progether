@@ -8,8 +8,11 @@
 <!-- header -->
 <div th:replace="fragment/common :: header('sign-up')"></div>
 
-<main class="form-group w-100 m-auto">
-    <form class="form-sign-up text-center" th:action="@{/users/sign-up}" method="post">
+<main class="form-group w-100 mt-5">
+    <div th:if="${signUpSuccess == false}" class="alert alert-danger mt-5 mx-2" role="alert" th:text="${errorMessage}">
+        회원가입 실패!
+    </div>
+    <form class="form-sign-up text-center mt-5 mb-5" th:action="@{/users/sign-up}" method="post">
         <svg xmlns="http://www.w3.org/2000/svg" style="width: 72px;" fill="currentColor"
              class="bi bi-p-square-fill mb-3"
              viewBox="0 0 16 16">
@@ -35,10 +38,6 @@
         <button class="w-100 btn btn-lg btn-primary mt-5" type="submit">회원가입</button>
     </form>
 </main>
-
-<div th:if="${signUpSuccess == false}" class="alert alert-danger mx-5" role="alert" th:text="${errorMessage}">
-    회원가입 실패!
-</div>
 
 <!-- footer -->
 <div th:replace="fragment/common :: footer"></div>

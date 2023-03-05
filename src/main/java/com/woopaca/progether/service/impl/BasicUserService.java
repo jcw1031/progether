@@ -65,8 +65,6 @@ public class BasicUserService implements UserService {
     @Override
     @Transactional
     public void userUpdate(final ProfileUpdateRequestDto profileUpdateRequestDto, final String token) {
-        validateCheckPassword(profileUpdateRequestDto.getPassword(),
-                profileUpdateRequestDto.getCheckPassword());
         User user = jwtUtils.getUserOfToken(token);
         user.updateUserProfile(profileUpdateRequestDto);
     }
