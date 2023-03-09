@@ -1,28 +1,16 @@
 package com.woopaca.progether.entity;
 
-import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import java.util.List;
-
-@Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Part {
+@AllArgsConstructor
+public enum Part {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "part_id")
-    private Long id;
-    private String partName;
+    BACK_END("백엔드"),
+    FRONT_END("프론트엔드"),
+    DESIGN("디자인"),
+    PLAN("기획");
 
-    @OneToMany(mappedBy = "part")
-    private List<User> users;
+    private final String partName;
 }

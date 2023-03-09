@@ -14,12 +14,12 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,8 +52,7 @@ public class User {
     @OneToMany(mappedBy = "writer", cascade = CascadeType.REMOVE)
     private List<Post> posts = new ArrayList<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "part_id")
+    @Enumerated(value = EnumType.STRING)
     private Part part;
 
     @Builder
@@ -80,12 +79,7 @@ public class User {
         subject = profileUpdateRequestDto.getSubject();
         introduction = profileUpdateRequestDto.getIntroduction();
         website = profileUpdateRequestDto.getWebsite();
-        setPart(part);
-    }
-
-    private void setPart(Part part) {
         this.part = part;
-        part.getUsers().add(this);
     }
 
     public UserProfileResponseDto toProfileDto() {
@@ -93,18 +87,14 @@ public class User {
         if (this.introduction != null) {
             introduction = this.introduction.replace("\n", "</br>");
         }
-        UserProfileResponseDto userProfileResponseDto = UserProfileResponseDto.builder()
+        return UserProfileResponseDto.builder()
                 .email(email)
                 .name(name)
                 .subject(subject)
                 .website(website)
                 .introduction(introduction)
                 .postNumber(postsNumber)
+                .part(part)
                 .build();
-
-        if (this.part != null) {
-            userProfileResponseDto.setPartName(part.getPartName());
-        }
-        return userProfileResponseDto;
     }
 }

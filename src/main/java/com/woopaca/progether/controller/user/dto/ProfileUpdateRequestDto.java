@@ -1,5 +1,6 @@
 package com.woopaca.progether.controller.user.dto;
 
+import com.woopaca.progether.entity.Part;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,5 +14,5 @@ public class ProfileUpdateRequestDto {
     private String subject;
     private String introduction;
     private String website;
-    private Long partId;
+    private Part part;
 }

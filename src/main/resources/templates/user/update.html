@@ -31,18 +31,18 @@
                placeholder="학과"
                autofocus>
 
-        <select th:if="${profileUpdateRequestDto == null}" class="form-control mb-3" name="partId" required>
+        <select th:if="${profileUpdateRequestDto == null}" class="form-control mb-3" name="part" required>
             <option selected th:value="${null}">파트</option>
             <option th:each="part : ${parts}"
-                    th:value="${part.id}"
+                    th:value="${part}"
                     th:text="${part.partName}"
                     th:selected="${user.part} == ${part}">
             </option>
         </select>
-        <select th:if="${profileUpdateSuccess == false}" class="form-control mb-3" name="partId" required>
+        <select th:if="${profileUpdateSuccess == false}" class="form-control mb-3" name="part" required>
             <option selected th:value="${null}">파트</option>
             <option th:each="part : ${parts}"
-                    th:value="${part.id}"
+                    th:value="${part}"
                     th:text="${part.partName}">
             </option>
         </select>

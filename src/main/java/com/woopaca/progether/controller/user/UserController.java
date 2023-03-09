@@ -4,9 +4,9 @@ import com.woopaca.progether.config.jwt.JwtAuthenticationValidator;
 import com.woopaca.progether.config.jwt.JwtUtils;
 import com.woopaca.progether.controller.user.dto.ProfileUpdateRequestDto;
 import com.woopaca.progether.controller.user.dto.UserProfileResponseDto;
+import com.woopaca.progether.entity.Part;
 import com.woopaca.progether.entity.User;
 import com.woopaca.progether.exception.user.UserException;
-import com.woopaca.progether.repository.PartRepository;
 import com.woopaca.progether.service.UserService;
 import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/users")
 @RequiredArgsConstructor
@@ -27,7 +29,6 @@ public class UserController {
     private final UserService userService;
     private final JwtAuthenticationValidator jwtAuthenticationValidator;
     private final JwtUtils jwtUtils;
-    private final PartRepository partRepository;
 
     @GetMapping("/profile")
     public String userProfile(
@@ -55,7 +56,7 @@ public class UserController {
         }
         User user = jwtUtils.getUserOfToken(token);
         model.addAttribute("user", user);
-        model.addAttribute("parts", partRepository.findAll());
+        model.addAttribute("parts", List.of(Part.values()));
         return "user/update";
     }
 
