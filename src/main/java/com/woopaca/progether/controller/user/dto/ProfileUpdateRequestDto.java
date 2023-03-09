@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class ProfileUpdateRequestDto {
 
     private String subject;
-    private String part;
     private String introduction;
     private String website;
+    private Long partId;
 }

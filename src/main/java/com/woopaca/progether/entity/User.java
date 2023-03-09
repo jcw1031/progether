@@ -14,10 +14,12 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +40,6 @@ public class User {
     private String subject;
     @Column(nullable = false)
     private String name;
-    private String part;
     private String introduction;
     private String website;
     private int postsNumber;
@@ -51,14 +52,17 @@ public class User {
     @OneToMany(mappedBy = "writer", cascade = CascadeType.REMOVE)
     private List<Post> posts = new ArrayList<>();
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "part_id")
+    private Part part;
+
     @Builder
-    public User(String email, String password, String subject, String name, String part,
+    public User(String email, String password, String subject, String name,
                 String introduction, String website, int postsNumber) {
         this.email = email;
         this.password = password;
         this.subject = subject;
         this.name = name;
-        this.part = part;
         this.introduction = introduction;
         this.website = website;
         this.postsNumber = postsNumber;
@@ -72,11 +76,16 @@ public class User {
                 .build();
     }
 
-    public void updateUserProfile(ProfileUpdateRequestDto profileUpdateRequestDto) {
+    public void updateUserProfile(ProfileUpdateRequestDto profileUpdateRequestDto, Part part) {
         subject = profileUpdateRequestDto.getSubject();
-        part = profileUpdateRequestDto.getPart();
         introduction = profileUpdateRequestDto.getIntroduction();
         website = profileUpdateRequestDto.getWebsite();
+        setPart(part);
+    }
+
+    private void setPart(Part part) {
+        this.part = part;
+        part.getUsers().add(this);
     }
 
     public UserProfileResponseDto toProfileDto() {
@@ -84,14 +93,18 @@ public class User {
         if (this.introduction != null) {
             introduction = this.introduction.replace("\n", "</br>");
         }
-        return UserProfileResponseDto.builder()
+        UserProfileResponseDto userProfileResponseDto = UserProfileResponseDto.builder()
                 .email(email)
                 .name(name)
-                .part(part)
                 .subject(subject)
                 .website(website)
                 .introduction(introduction)
                 .postNumber(postsNumber)
                 .build();
+
+        if (this.part != null) {
+            userProfileResponseDto.setPartName(part.getPartName());
+        }
+        return userProfileResponseDto;
     }
 }

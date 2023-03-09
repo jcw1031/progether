@@ -6,11 +6,14 @@ import com.woopaca.progether.controller.user.dto.ProfileUpdateRequestDto;
 import com.woopaca.progether.controller.user.dto.SignInRequestDto;
 import com.woopaca.progether.controller.user.dto.SignUpRequestDto;
 import com.woopaca.progether.controller.user.dto.UserProfileResponseDto;
+import com.woopaca.progether.entity.Part;
 import com.woopaca.progether.entity.User;
+import com.woopaca.progether.exception.user.impl.PartNotFoundException;
 import com.woopaca.progether.exception.user.impl.EmailDuplicateException;
 import com.woopaca.progether.exception.user.impl.IncorrectCheckPassword;
 import com.woopaca.progether.exception.user.impl.InvalidSignInUserException;
 import com.woopaca.progether.exception.user.impl.UserNotFoundException;
+import com.woopaca.progether.repository.PartRepository;
 import com.woopaca.progether.repository.UserRepository;
 import com.woopaca.progether.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +31,7 @@ public class BasicUserService implements UserService {
     private final UserRepository userRepository;
     private final JwtProvider jwtProvider;
     private final JwtUtils jwtUtils;
+    private final PartRepository partRepository;
 
     @Override
     @Transactional
@@ -66,7 +70,9 @@ public class BasicUserService implements UserService {
     @Transactional
     public void userUpdate(final ProfileUpdateRequestDto profileUpdateRequestDto, final String token) {
         User user = jwtUtils.getUserOfToken(token);
-        user.updateUserProfile(profileUpdateRequestDto);
+        Long partId = profileUpdateRequestDto.getPartId();
+        Part part = partRepository.findById(partId).orElseThrow(() -> new PartNotFoundException());
+        user.updateUserProfile(profileUpdateRequestDto, part);
     }
 
     private void validateDuplicateEmail(final SignUpRequestDto signUpRequestDto) {

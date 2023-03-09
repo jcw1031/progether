@@ -6,6 +6,7 @@ import com.woopaca.progether.controller.user.dto.ProfileUpdateRequestDto;
 import com.woopaca.progether.controller.user.dto.UserProfileResponseDto;
 import com.woopaca.progether.entity.User;
 import com.woopaca.progether.exception.user.UserException;
+import com.woopaca.progether.repository.PartRepository;
 import com.woopaca.progether.service.UserService;
 import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,7 @@ public class UserController {
     private final UserService userService;
     private final JwtAuthenticationValidator jwtAuthenticationValidator;
     private final JwtUtils jwtUtils;
+    private final PartRepository partRepository;
 
     @GetMapping("/profile")
     public String userProfile(
@@ -53,6 +55,7 @@ public class UserController {
         }
         User user = jwtUtils.getUserOfToken(token);
         model.addAttribute("user", user);
+        model.addAttribute("parts", partRepository.findAll());
         return "user/update";
     }
 
