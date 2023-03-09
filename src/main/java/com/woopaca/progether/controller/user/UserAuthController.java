@@ -27,6 +27,7 @@ public class UserAuthController {
 
     private final UserService userService;
     private final JwtAuthenticationValidator jwtAuthenticationValidator;
+    private final String PATH = "localhost";
 
     @GetMapping("/sign-up")
     public String signUpForm(
@@ -78,7 +79,7 @@ public class UserAuthController {
         redirectAttributes.addFlashAttribute("signInStatus", true);
         response.setHeader("Authorization", token);
         Cookie cookie = new Cookie("access_token", token);
-        cookie.setDomain("localhost");
+        cookie.setDomain(PATH);
         cookie.setPath("/");
         cookie.setMaxAge(60 * 60 * 3);
         response.addCookie(cookie);
@@ -88,7 +89,7 @@ public class UserAuthController {
     @GetMapping("/sign-out")
     public String signOut(final HttpServletResponse response) {
         Cookie cookie = new Cookie("access_token", null);
-        cookie.setDomain("localhost");
+        cookie.setDomain(PATH);
         cookie.setPath("/");
         cookie.setMaxAge(0);
         response.addCookie(cookie);
