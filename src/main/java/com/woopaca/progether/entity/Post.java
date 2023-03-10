@@ -1,5 +1,6 @@
 package com.woopaca.progether.entity;
 
+import com.woopaca.progether.controller.dto.PostListResponseDto;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +10,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -33,6 +36,7 @@ public class Post {
     private String postContent;
     private String requiredSkills;
     private String postDate;
+    @Enumerated(value = EnumType.STRING)
     private PostStatus postStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -54,5 +58,15 @@ public class Post {
     public void writePost(User user) {
         writer = user;
         user.getPosts().add(this);
+    }
+
+    public PostListResponseDto toListDto() {
+        return PostListResponseDto.builder()
+                .postTitle(postTitle)
+                .requiredSkills(requiredSkills)
+                .postDate(postDate)
+                .writer(writer.getName())
+                .postStatus(postStatus)
+                .build();
     }
 }
