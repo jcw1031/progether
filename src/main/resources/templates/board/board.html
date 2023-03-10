@@ -12,25 +12,37 @@
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mt-5" data-bs-theme="dark">
             <div class="col" th:each="post : ${postList}">
-                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">99+</span>
-                <div class="card shadow-sm">
-                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                         xmlns="http://www.w3.org/2000/svg"
-                         role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
-                         focusable="false">
-                        <title>Placeholder</title>
-                        <rect width="100%" height="100%" fill="#55595c"/>
-                    </svg>
-                    <div class="card-body bg-dark text-light">
-                        <h3 class="card-text" th:text="${post.postTitle}">Title</h3>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <span class="badge text-bg-primary" th:text="${post.postStatus.getStatus()}">Primary</span>
+                <a th:href="@{/posts/{postId}(postId=${post.postId})}" style="text-decoration: none">
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">99+</span>
+                    <div class="card shadow-sm">
+                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
+                             xmlns="http://www.w3.org/2000/svg"
+                             role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
+                             focusable="false">
+                            <title>Placeholder</title>
+                            <rect width="100%" height="100%" fill="#55595c"/>
+                        </svg>
+                        <div class="card-body bg-dark text-light">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h3 class="card-text" th:text="${post.postTitle}">Title</h3>
+                                <small>
+                                    <a th:href="@{/users/{userId}(userId=${post.writer.id})}" th:text="${post.writer.name}" style="text-decoration: none"></a>
+                                </small>
                             </div>
-                            <small class="text-muted" th:text="${post.postDate}"></small>
+                            <p th:text="${post.requiredSkills}"></p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                <span class="badge text-bg-primary" th:if="${post.postStatus.toString() == 'PROGRESS'}"
+                                      th:text="${post.postStatus.status}">Primary</span>
+                                    <span class="badge text-bg-danger"
+                                          th:if="${post.postStatus.toString() == 'COMPLETE'}"
+                                          th:text="${post.postStatus.status}">Primary</span>
+                                </div>
+                                <small class="text-muted" th:text="${post.postDate}"></small>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
     </div>

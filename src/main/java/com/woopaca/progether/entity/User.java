@@ -16,6 +16,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -44,7 +45,7 @@ public class User {
     private String website;
     private int postsNumber;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "skill", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "skill_name")
     private List<String> skills;
@@ -95,6 +96,7 @@ public class User {
                 .introduction(introduction)
                 .postNumber(postsNumber)
                 .part(part)
+                .skills(skills)
                 .build();
     }
 }

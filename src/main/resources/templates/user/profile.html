@@ -43,13 +43,7 @@
                 <div class="skills">
                     <h6>Skills</h6>
                     <ul>
-                        <li>UI / UX</li>
-                        <li>Front End Development</li>
-                        <li>HTML</li>
-                        <li>CSS</li>
-                        <li>JavaScript</li>
-                        <li>React</li>
-                        <li>Node</li>
+                        <li th:each="skill : ${user.skills}" th:text="${skill}">Skills</li>
                     </ul>
                 </div>
             </div>

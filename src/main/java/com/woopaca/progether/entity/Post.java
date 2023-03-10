@@ -62,10 +62,11 @@ public class Post {
 
     public PostListResponseDto toListDto() {
         return PostListResponseDto.builder()
+                .postId(id)
                 .postTitle(postTitle)
                 .requiredSkills(requiredSkills)
                 .postDate(postDate)
-                .writer(writer.getName())
+                .writer(writer)
                 .postStatus(postStatus)
                 .build();
     }
