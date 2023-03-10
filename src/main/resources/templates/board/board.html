@@ -12,7 +12,7 @@
     <div class="container">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mt-5" data-bs-theme="dark">
             <div class="col" th:each="post : ${postList}">
-                <a th:href="@{/posts/{postId}(postId=${post.postId})}" style="text-decoration: none">
+                <a th:href="@{/posts/{postId}(postId=${post.postId})}">
                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">99+</span>
                     <div class="card shadow-sm">
                         <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
@@ -26,7 +26,8 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <h3 class="card-text" th:text="${post.postTitle}">Title</h3>
                                 <small>
-                                    <a th:href="@{/users/{userId}(userId=${post.writer.id})}" th:text="${post.writer.name}" style="text-decoration: none"></a>
+                                    <a th:href="@{/users/{userId}(userId=${post.writer.id})}"
+                                       th:text="${post.writer.name}"></a>
                                 </small>
                             </div>
                             <p th:text="${post.requiredSkills}"></p>
