@@ -1,13 +1,5 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" class="h-100">
-<div th:replace="fragment/common :: head"></div>
-
-<!-- ---------- -->
-
-<body class="d-flex flex-column h-100 bg-dark text-light">
-<!-- header -->
-<div th:replace="fragment/common :: header('sign-up')"></div>
-
+<html th:replace="~{layout/common :: layout (~{::main}, '')}" xmlns:th="http://www.thymeleaf.org" class="h-100">
 <main class="form-group w-100 mt-5">
     <div th:if="${signUpSuccess == false}" class="alert alert-danger mt-5 mx-2" role="alert" th:text="${errorMessage}">
         회원가입 실패!
@@ -38,11 +30,4 @@
         <button class="w-100 btn btn-lg btn-primary mt-5" type="submit">회원가입</button>
     </form>
 </main>
-
-<!-- footer -->
-<div th:replace="fragment/common :: footer"></div>
-
-<!--script-->
-<div th:replace="fragment/common :: bootstrapScript"></div>
-</body>
 </html>

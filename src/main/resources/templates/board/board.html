@@ -1,58 +1,45 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" class="h-100">
-<div th:replace="fragment/common :: head"></div>
-
-<!-- ---------- -->
-
-<body class="d-flex flex-column h-100 bg-dark text-light">
-<!-- header -->
-<div th:replace="fragment/common :: header('board')"></div>
-
-<div class="album py-5 bg-dark mt-5">
-    <div class="container">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mt-5" data-bs-theme="dark">
-            <div class="col" th:each="post : ${postList}">
-                <a th:href="@{/posts/{postId}(postId=${post.postId})}">
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">99+</span>
-                    <div class="card shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                             xmlns="http://www.w3.org/2000/svg"
-                             role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
-                             focusable="false">
-                            <title>Placeholder</title>
-                            <rect width="100%" height="100%" fill="#55595c"/>
-                        </svg>
-                        <div class="card-body bg-dark text-light">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <h3 class="card-text" th:text="${post.postTitle}">Title</h3>
-                                <small>
-                                    <a th:href="@{/users/{userId}(userId=${post.writer.id})}"
-                                       th:text="${post.writer.name}"></a>
-                                </small>
-                            </div>
-                            <p th:text="${post.requiredSkills}"></p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
+<html th:replace="~{layout/common :: layout (~{::main}, 'board')}">
+<main>
+    <div class="album py-5 bg-dark mt-5">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mt-5" data-bs-theme="dark">
+                <div class="col m-3" th:each="post : ${postList}">
+                    <a th:href="@{/posts/{postId}(postId=${post.postId})}">
+                        <div class="card shadow-sm">
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">99+</span>
+                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
+                                 xmlns="http://www.w3.org/2000/svg"
+                                 role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
+                                 focusable="false">
+                                <title>Placeholder</title>
+                                <rect width="100%" height="100%" fill="#55595c"/>
+                            </svg>
+                            <div class="card-body bg-dark text-light">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h3 class="card-text" th:text="${post.postTitle}">Title</h3>
+                                    <small>
+                                        <a th:href="@{/users/{userId}(userId=${post.writer.id})}"
+                                           th:text="${post.writer.name}"></a>
+                                    </small>
+                                </div>
+                                <p th:text="${post.requiredSkills}"></p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
                                 <span class="badge text-bg-primary" th:if="${post.postStatus.toString() == 'PROGRESS'}"
                                       th:text="${post.postStatus.status}">Primary</span>
-                                    <span class="badge text-bg-danger"
-                                          th:if="${post.postStatus.toString() == 'COMPLETE'}"
-                                          th:text="${post.postStatus.status}">Primary</span>
+                                        <span class="badge text-bg-danger"
+                                              th:if="${post.postStatus.toString() == 'COMPLETE'}"
+                                              th:text="${post.postStatus.status}">Primary</span>
+                                    </div>
+                                    <small class="text-muted" th:text="${post.postDate}"></small>
                                 </div>
-                                <small class="text-muted" th:text="${post.postDate}"></small>
                             </div>
                         </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
-<!-- footer -->
-<div th:replace="fragment/common :: footer"></div>
-
-<!--script-->
-<div th:replace="fragment/common :: bootstrapScript"></div>
-</body>
+</main>
 </html>

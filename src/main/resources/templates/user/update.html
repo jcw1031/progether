@@ -1,12 +1,6 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" class="h-100">
-<div th:replace="fragment/common :: head"></div>
-
+<html th:replace="~{layout/common :: layout (~{::main}, '')}" xmlns:th="http://www.thymeleaf.org" class="h-100">
 <!-- ---------- -->
-
-<body class="d-flex flex-column h-100 bg-dark text-light">
-<!-- header -->
-<div th:replace="fragment/common :: header('login')"></div>
 
 <main class="form-group w-100 mt-5">
     <div th:if="${profileUpdateSuccess == false}" class="alert alert-danger mt-5 mx-2" role="alert"
@@ -64,11 +58,4 @@
         <button class="w-100 btn btn-lg btn-primary mt-3 mb-3" type="submit">정보 수정</button>
     </form>
 </main>
-
-<!-- footer -->
-<div th:replace="fragment/common :: footer"></div>
-
-<!--script-->
-<div th:replace="fragment/common :: bootstrapScript"></div>
-</body>
 </html>

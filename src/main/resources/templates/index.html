@@ -1,12 +1,6 @@
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" class="h-100">
-<div th:replace="fragment/common :: head"></div>
-
+<html th:replace="~{layout/common :: layout (~{::main}, 'home')}" xmlns:th="http://www.thymeleaf.org" class="h-100">
 <!-- ---------- -->
-
-<body class="d-flex flex-column h-100 bg-dark text-light">
-<!-- header -->
-<div th:replace="fragment/common :: header('home')"></div>
 
 <!--main-->
 <main role="main" class="flex-shrink-0">
@@ -19,11 +13,4 @@
              class="img-fluid mb-5 mt-3" alt="Responsive image" width="90%" height="90%">
     </div>
 </main>
-
-<!-- footer -->
-<div th:replace="fragment/common :: footer"></div>
-
-<!--script-->
-<div th:replace="fragment/common :: bootstrapScript"></div>
-</body>
 </html>
