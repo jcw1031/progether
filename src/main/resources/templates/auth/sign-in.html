@@ -1,7 +1,7 @@
 <!doctype html>
 <html th:replace="~{layout/common :: layout (~{::main}, '')}" xmlns:th="http://www.thymeleaf.org" class="h-100">
 <main class="form-sign-in w-100 m-auto">
-    <form class="form-sign-in text-center" th:action="@{/users/sign-in}" method="post">
+    <form class="form-sign-in text-center" th:object="${signInRequestDto}" th:action="@{/users/sign-in}" method="post">
         <svg xmlns="http://www.w3.org/2000/svg" style="width: 72px;" fill="currentColor"
              class="bi bi-p-square-fill mb-3"
              viewBox="0 0 16 16">
@@ -9,7 +9,7 @@
             <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2Zm3.5 4.002h2.962C10.045 4.002 11 5.104 11 6.586c0 1.494-.967 2.578-2.55 2.578H6.784V12H5.5V4.002Z"/>
         </svg>
         <h1 class="h3 mb-3 font-weight-normal" style="text-align: center">어서오세요!</h1>
-        <input type="email" id="email" name="email" class="form-control" placeholder="이메일" required autofocus>
+        <input th:field="*{email}" type="email" class="form-control" placeholder="이메일" required autofocus>
         <input type="password" id="password" name="password" class="form-control" placeholder="비밀번호" required>
         <button class="w-100 btn btn-lg btn-primary" type="submit">로그인</button>
         <!--<span th:if="${userId==null}">

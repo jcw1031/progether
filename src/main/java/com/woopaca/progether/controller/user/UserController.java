@@ -54,6 +54,11 @@ public class UserController {
         } catch (JwtException e) {
             return "redirect:/users/sign-out";
         }
+
+        if (model.getAttribute("profileUpdateRequestDto") == null) {
+            model.addAttribute("profileUpdateRequestDto", new ProfileUpdateRequestDto());
+        }
+
         User user = jwtUtils.getUserOfToken(token);
         model.addAttribute("user", user);
         model.addAttribute("parts", List.of(Part.values()));

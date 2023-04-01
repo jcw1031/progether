@@ -33,6 +33,9 @@ public class UserAuthController {
     public String signUpForm(
             @CookieValue(name = "access_token", required = false) final String token,
             final Model model) {
+        if (model.getAttribute("signUpRequestDto") == null) {
+            model.addAttribute("signUpRequestDto", new SignUpRequestDto());
+        }
         validateToken(token, model);
         return "auth/sign-up";
     }
@@ -60,6 +63,9 @@ public class UserAuthController {
             final Model model
     ) {
         validateToken(token, model);
+        if (model.getAttribute("signInRequestDto") == null) {
+            model.addAttribute("signInRequestDto", new SignInRequestDto());
+        }
         return "auth/sign-in";
     }
 
@@ -73,7 +79,8 @@ public class UserAuthController {
             token = userService.signIn(signInRequestDto);
         } catch (UserException e) {
             redirectAttributes.addFlashAttribute("signInSuccess", false)
-                    .addFlashAttribute("errorMessage", e.getUserError().getMessage());
+                    .addFlashAttribute("errorMessage", e.getUserError().getMessage())
+                    .addFlashAttribute("signInRequestDto", signInRequestDto);
             return "redirect:/users/sign-in";
         }
         redirectAttributes.addFlashAttribute("signInStatus", true);

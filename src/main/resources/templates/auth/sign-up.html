@@ -4,7 +4,8 @@
     <div th:if="${signUpSuccess == false}" class="alert alert-danger mt-5 mx-2" role="alert" th:text="${errorMessage}">
         회원가입 실패!
     </div>
-    <form class="form-sign-up text-center mt-5 mb-5" th:action="@{/users/sign-up}" method="post">
+    <form class="form-sign-up text-center mt-5 mb-5" th:object="${signUpRequestDto}" th:action="@{/users/sign-up}"
+          method="post">
         <svg xmlns="http://www.w3.org/2000/svg" style="width: 72px;" fill="currentColor"
              class="bi bi-p-square-fill mb-3"
              viewBox="0 0 16 16">
@@ -13,20 +14,12 @@
         </svg>
         <h1 class="h2 mb-3 font-weight-normal" style="text-align: center">회원가입</h1>
         <h3 class="h5 mb-3" style="text-align: center">정보를 잘 입력해 주세요 😊</h3>
-        <input th:if="${signUpRequestDto != null}" th:value="${signUpRequestDto.email}" type="email" id="email"
-               name="email" class="form-control mb-3"
-               placeholder="이메일" required autofocus>
-        <input th:if="${signUpRequestDto == null}" type="email" id="email" name="email" class="form-control mb-3"
-               placeholder="이메일" required autofocus>
+        <input th:field="*{email}" type="email" class="form-control mb-3" placeholder="이메일" required
+               autofocus>
         <input type="password" id="password" name="password" class="form-control mb-3" placeholder="비밀번호" required>
-        <input type="password" id="checkPassword" name="checkPassword" class="form-control mb-3"
-               placeholder="비밀번호 확인"
+        <input type="password" id="checkPassword" name="checkPassword" class="form-control mb-3" placeholder="비밀번호 확인"
                required>
-        <input th:if="${signUpRequestDto != null}" th:value="${signUpRequestDto.name}" type="text" id="name" name="name"
-               class="form-control mb-3"
-               placeholder="이름(닉네임)" required>
-        <input th:if="${signUpRequestDto == null}" type="text" id="name" name="name" class="form-control mb-3"
-               placeholder="이름(닉네임)" required>
+        <input th:field="*{name}" type="text" class="form-control mb-3" placeholder="이름(닉네임)" required>
         <button class="w-100 btn btn-lg btn-primary mt-5" type="submit">회원가입</button>
     </form>
 </main>
