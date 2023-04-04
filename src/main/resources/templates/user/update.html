@@ -7,7 +7,7 @@
          th:text="${errorMessage}">
         회원 정보 수정 실패!
     </div>
-    <form class="form-sign-up text-center mt-5" th:action="@{/users/update}" method="post">
+    <form class="form-sign-up text-center mt-5" th:object="${user}" th:action="@{/users/update}" method="post">
         <svg xmlns="http://www.w3.org/2000/svg" style="width: 72px;" fill="currentColor"
              class="bi bi-p-square-fill mb-3"
              viewBox="0 0 16 16">
@@ -16,43 +16,22 @@
         </svg>
         <h1 class="h3 mb-3 font-weight-normal" style="text-align: center">✍️ 회원 정보 수정 ✍️</h1>
 
-        <input th:if="${profileUpdateRequestDto == null}" th:value="${user.subject}" type="text" id="subject"
-               name="subject" class="form-control mb-3"
-               placeholder="학과"
-               autofocus>
-        <input th:if="${profileUpdateSuccess == false}" th:value="${profileUpdateRequestDto.subject}" type="text"
-               id="subject" name="subject" class="form-control mb-3"
-               placeholder="학과"
-               autofocus>
+        <input th:field="*{subject}" type="text" class="form-control mb-3" placeholder="학과" autofocus>
 
-        <select th:if="${profileUpdateRequestDto == null}" class="form-control mb-3" name="part" required>
+        <select class="form-control mb-3" th:field="*{part}" required>
             <option selected th:value="${null}">파트</option>
-            <option th:each="part : ${parts}"
-                    th:value="${part}"
-                    th:text="${part.partName}"
-                    th:selected="${user.part} == ${part}">
-            </option>
-        </select>
-        <select th:if="${profileUpdateSuccess == false}" class="form-control mb-3" name="part" required>
-            <option selected th:value="${null}">파트</option>
-            <option th:each="part : ${parts}"
-                    th:value="${part}"
-                    th:text="${part.partName}">
-            </option>
+            <th:block th:each="part : ${parts}">
+                <option th:value="${part}" th:text="${part.partName}" th:selected="*{part} == ${part}"></option>
+            </th:block>
         </select>
 
-        <textarea th:if="${profileUpdateRequestDto == null}" th:text="${user.getIntroduction}"
-                  class="form-control mb-3" id="introduction" name="introduction"
-                  rows="5" placeholder="소개"></textarea>
-        <textarea th:if="${profileUpdateSuccess == false}" th:text="${profileUpdateRequestDto.introduction}"
-                  class="form-control mb-3" id="introduction" name="introduction"
-                  rows="5" placeholder="소개"></textarea>
-
-        <input th:if="${profileUpdateRequestDto == null}" th:value="${user.website}" type="url" id="website"
-               name="website" class="form-control mb-3"
+        <textarea th:if="${profileUpdateSuccess != false}" th:field="*{introduction}" class="form-control mb-3" rows="5"
+                  placeholder="소개"></textarea>
+        <textarea th:if="${profileUpdateSuccess == false}" th:field="${profileUpdateRequestDto.introduction}"
+                  class="form-control mb-3" rows="5" placeholder="소개"></textarea>
+        <input th:if="${profileUpdateSuccess != false}" th:field="*{website}" type="url" class="form-control mb-3"
                placeholder="웹사이트">
-        <input th:if="${profileUpdateSuccess == false}" th:value="${profileUpdateRequestDto.website}"
-               type="url" id="website" name="website" class="form-control mb-3"
+        <input th:if="${profileUpdateSuccess == false}" th:field="${profileUpdateRequestDto.website}" type="url" class="form-control mb-3"
                placeholder="웹사이트">
 
         <button class="w-100 btn btn-lg btn-primary mt-3 mb-3" type="submit">정보 수정</button>
