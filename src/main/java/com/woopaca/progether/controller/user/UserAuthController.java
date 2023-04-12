@@ -9,11 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.Cookie;
@@ -33,9 +29,7 @@ public class UserAuthController {
     public String signUpForm(
             @CookieValue(name = "access_token", required = false) final String token,
             final Model model) {
-        if (model.getAttribute("signUpRequestDto") == null) {
-            model.addAttribute("signUpRequestDto", new SignUpRequestDto());
-        }
+        model.addAttribute("signUpRequestDto", new SignUpRequestDto());
         validateToken(token, model);
         return "auth/sign-up";
     }
@@ -43,15 +37,15 @@ public class UserAuthController {
     @PostMapping("/sign-up")
     public String signUp(
             @ModelAttribute final SignUpRequestDto signUpRequestDto,
-            final RedirectAttributes redirectAttributes
+            final Model model, final RedirectAttributes redirectAttributes
     ) {
         try {
             userService.signUp(signUpRequestDto);
         } catch (UserException e) {
-            redirectAttributes.addFlashAttribute("signUpSuccess", false)
-                    .addFlashAttribute("errorMessage", e.getUserError().getMessage())
-                    .addFlashAttribute("signUpRequestDto", signUpRequestDto);
-            return "redirect:/users/sign-up";
+            model.addAttribute("signUpSuccess", false)
+                    .addAttribute("errorMessage", e.getUserError().getMessage())
+                    .addAttribute("signInStatus", false);
+            return "auth/sign-up";
         }
         redirectAttributes.addFlashAttribute("signUpSuccess", true);
         return "redirect:/users/sign-in";
@@ -63,26 +57,26 @@ public class UserAuthController {
             final Model model
     ) {
         validateToken(token, model);
-        if (model.getAttribute("signInRequestDto") == null) {
-            model.addAttribute("signInRequestDto", new SignInRequestDto());
-        }
+        model.addAttribute("signInRequestDto", new SignInRequestDto());
         return "auth/sign-in";
     }
 
     @PostMapping("/sign-in")
     public String signIn(
             @ModelAttribute final SignInRequestDto signInRequestDto,
-            final HttpServletResponse response, final RedirectAttributes redirectAttributes
+            final HttpServletResponse response, final Model model,
+            final RedirectAttributes redirectAttributes
     ) {
         String token;
         try {
             token = userService.signIn(signInRequestDto);
         } catch (UserException e) {
-            redirectAttributes.addFlashAttribute("signInSuccess", false)
-                    .addFlashAttribute("errorMessage", e.getUserError().getMessage())
-                    .addFlashAttribute("signInRequestDto", signInRequestDto);
-            return "redirect:/users/sign-in";
+            model.addAttribute("signInSuccess", false)
+                    .addAttribute("errorMessage", e.getUserError().getMessage())
+                    .addAttribute("signInStatus", false);
+            return "auth/sign-in";
         }
+
         redirectAttributes.addFlashAttribute("signInStatus", true);
         response.setHeader("Authorization", token);
         Cookie cookie = new Cookie("access_token", token);

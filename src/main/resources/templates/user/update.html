@@ -21,7 +21,7 @@
         <select class="form-control mb-3" th:field="*{part}" required>
             <option selected th:value="${null}">파트</option>
             <th:block th:each="part : ${parts}">
-                <option th:value="${part}" th:text="${part.partName}" th:selected="*{part} == ${part}"></option>
+                <option th:value="${part}" th:text="${part.partName}"></option>
             </th:block>
         </select>
 
