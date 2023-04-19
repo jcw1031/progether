@@ -3,13 +3,21 @@ package com.woopaca.progether.controller.user;
 import com.woopaca.progether.config.jwt.JwtAuthenticationValidator;
 import com.woopaca.progether.controller.user.dto.SignInRequestDto;
 import com.woopaca.progether.controller.user.dto.SignUpRequestDto;
+import com.woopaca.progether.exception.user.UserError;
 import com.woopaca.progether.exception.user.UserException;
 import com.woopaca.progether.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.Cookie;
@@ -36,15 +44,17 @@ public class UserAuthController {
 
     @PostMapping("/sign-up")
     public String signUp(
-            @ModelAttribute final SignUpRequestDto signUpRequestDto,
+            @ModelAttribute final SignUpRequestDto signUpRequestDto, final BindingResult bindingResult,
             final Model model, final RedirectAttributes redirectAttributes
     ) {
+
         try {
             userService.signUp(signUpRequestDto);
         } catch (UserException e) {
-            model.addAttribute("signUpSuccess", false)
-                    .addAttribute("errorMessage", e.getUserError().getMessage())
-                    .addAttribute("signInStatus", false);
+            UserError userError = e.getUserError();
+            bindingResult.addError(new FieldError(
+                    "signUpRequestDto", userError.getField(), userError.getMessage()));
+            model.addAttribute("signInStatus", false);
             return "auth/sign-up";
         }
         redirectAttributes.addFlashAttribute("signUpSuccess", true);
@@ -63,17 +73,16 @@ public class UserAuthController {
 
     @PostMapping("/sign-in")
     public String signIn(
-            @ModelAttribute final SignInRequestDto signInRequestDto,
-            final HttpServletResponse response, final Model model,
-            final RedirectAttributes redirectAttributes
+            @ModelAttribute final SignInRequestDto signInRequestDto, final BindingResult bindingResult,
+            final HttpServletResponse response, final Model model, final RedirectAttributes redirectAttributes
     ) {
         String token;
         try {
             token = userService.signIn(signInRequestDto);
         } catch (UserException e) {
-            model.addAttribute("signInSuccess", false)
-                    .addAttribute("errorMessage", e.getUserError().getMessage())
-                    .addAttribute("signInStatus", false);
+            bindingResult.addError(new ObjectError(
+                    "signInRequestDto", e.getUserError().getMessage()));
+            model.addAttribute("signInStatus", false);
             return "auth/sign-in";
         }
 

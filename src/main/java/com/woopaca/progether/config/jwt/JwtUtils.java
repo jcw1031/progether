@@ -42,7 +42,7 @@ public class JwtUtils {
                 .parseClaimsJws(token)
                 .getBody().getSubject();
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException());
+                .orElseThrow(UserNotFoundException::new);
     }
 
     public String resolveToken(String authorization) {

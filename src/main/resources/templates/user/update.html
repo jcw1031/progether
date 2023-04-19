@@ -3,11 +3,14 @@
 <!-- ---------- -->
 
 <main class="form-group w-100 mt-5">
-    <div th:if="${profileUpdateSuccess == false}" class="alert alert-danger mt-5 mx-2" role="alert"
-         th:text="${errorMessage}">
-        회원 정보 수정 실패!
-    </div>
-    <form class="form-sign-up text-center mt-5" th:object="${user}" th:action="@{/users/update}" method="post">
+    <th:block th:object="${profileUpdateRequestDto}">
+        <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger mt-5 mx-2" role="alert"
+             th:text="${#fields.errors().get(0)}">
+            회원 정보 수정 실패!
+        </div>
+    </th:block>
+    <form class="form-sign-up text-center mt-5" th:object="${profileUpdateRequestDto}" th:action="@{/users/update}"
+          method="post">
         <svg xmlns="http://www.w3.org/2000/svg" style="width: 72px;" fill="currentColor"
              class="bi bi-p-square-fill mb-3"
              viewBox="0 0 16 16">
@@ -25,14 +28,8 @@
             </th:block>
         </select>
 
-        <textarea th:if="${profileUpdateSuccess != false}" th:field="*{introduction}" class="form-control mb-3" rows="5"
-                  placeholder="소개"></textarea>
-        <textarea th:if="${profileUpdateSuccess == false}" th:field="${profileUpdateRequestDto.introduction}"
-                  class="form-control mb-3" rows="5" placeholder="소개"></textarea>
-        <input th:if="${profileUpdateSuccess != false}" th:field="*{website}" type="url" class="form-control mb-3"
-               placeholder="웹사이트">
-        <input th:if="${profileUpdateSuccess == false}" th:field="${profileUpdateRequestDto.website}" type="url" class="form-control mb-3"
-               placeholder="웹사이트">
+        <textarea th:field="*{introduction}" class="form-control mb-3" rows="5" placeholder="소개"></textarea>
+        <input th:field="*{website}" type="url" class="form-control mb-3" placeholder="웹사이트">
 
         <button class="w-100 btn btn-lg btn-primary mt-3 mb-3" type="submit">정보 수정</button>
     </form>

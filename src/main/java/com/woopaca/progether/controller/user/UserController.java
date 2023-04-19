@@ -6,12 +6,15 @@ import com.woopaca.progether.controller.user.dto.ProfileUpdateRequestDto;
 import com.woopaca.progether.controller.user.dto.UserProfileResponseDto;
 import com.woopaca.progether.entity.Part;
 import com.woopaca.progether.entity.User;
+import com.woopaca.progether.exception.user.UserError;
 import com.woopaca.progether.exception.user.UserException;
 import com.woopaca.progether.service.UserService;
 import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -55,19 +58,15 @@ public class UserController {
             return "redirect:/users/sign-out";
         }
 
-        if (model.getAttribute("profileUpdateRequestDto") == null) {
-            model.addAttribute("profileUpdateRequestDto", new ProfileUpdateRequestDto());
-        }
-
         User user = jwtUtils.getUserOfToken(token);
-        model.addAttribute("user", user);
+        model.addAttribute("profileUpdateRequestDto", ProfileUpdateRequestDto.from(user));
         model.addAttribute("parts", List.of(Part.values()));
         return "user/update";
     }
 
     @PostMapping("/update")
     public String userUpdate(
-            @ModelAttribute ProfileUpdateRequestDto profileUpdateRequestDto,
+            @ModelAttribute ProfileUpdateRequestDto profileUpdateRequestDto, final BindingResult bindingResult,
             @CookieValue(name = "access_token", required = false) final String token, final Model model,
             final RedirectAttributes redirectAttributes
     ) {
@@ -79,10 +78,9 @@ public class UserController {
         try {
             userService.userUpdate(profileUpdateRequestDto, token);
         } catch (UserException e) {
-            redirectAttributes.addFlashAttribute("profileUpdateSuccess", false)
-                    .addFlashAttribute("errorMessage", e.getUserError().getMessage())
-                    .addFlashAttribute("profileUpdateRequestDto", profileUpdateRequestDto);
-            return "redirect:/users/update";
+            UserError userError = e.getUserError();
+            bindingResult.addError(new FieldError("profileUpdateRequestDto", userError.getField(), userError.getMessage()));
+            return "user/update";
         }
         return "redirect:/users/profile";
     }

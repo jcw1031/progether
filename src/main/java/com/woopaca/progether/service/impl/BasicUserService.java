@@ -48,7 +48,7 @@ public class BasicUserService implements UserService {
 
     private User validateSignInUser(final SignInRequestDto signInRequestDto) {
         User user = userRepository.findByEmail(signInRequestDto.getEmail())
-                .orElseThrow(() -> new InvalidSignInUserException());
+                .orElseThrow(InvalidSignInUserException::new);
 
         if (!BCrypt.checkpw(signInRequestDto.getPassword(), user.getPassword())) {
             throw new InvalidSignInUserException();
@@ -59,7 +59,7 @@ public class BasicUserService implements UserService {
     @Override
     public UserProfileResponseDto userInfo(final String token) {
         String userEmail = jwtUtils.getEmailInToken(token);
-        User user = userRepository.findByEmail(userEmail).orElseThrow(() -> new UserNotFoundException());
+        User user = userRepository.findByEmail(userEmail).orElseThrow(UserNotFoundException::new);
         return user.toProfileDto();
     }
 
