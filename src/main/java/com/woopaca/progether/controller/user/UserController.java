@@ -15,12 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -67,8 +62,7 @@ public class UserController {
     @PostMapping("/update")
     public String userUpdate(
             @ModelAttribute ProfileUpdateRequestDto profileUpdateRequestDto, final BindingResult bindingResult,
-            @CookieValue(name = "access_token", required = false) final String token, final Model model,
-            final RedirectAttributes redirectAttributes
+            @CookieValue(name = "access_token", required = false) final String token, final Model model
     ) {
         try {
             validateToken(token, model);
@@ -79,7 +73,9 @@ public class UserController {
             userService.userUpdate(profileUpdateRequestDto, token);
         } catch (UserException e) {
             UserError userError = e.getUserError();
-            bindingResult.addError(new FieldError("profileUpdateRequestDto", userError.getField(), userError.getMessage()));
+            bindingResult.addError(new FieldError(
+                    "profileUpdateRequestDto", userError.getField(), userError.getMessage()
+            ));
             return "user/update";
         }
         return "redirect:/users/profile";

@@ -13,11 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.Cookie;
@@ -53,12 +49,22 @@ public class UserAuthController {
         } catch (UserException e) {
             UserError userError = e.getUserError();
             bindingResult.addError(new FieldError(
-                    "signUpRequestDto", userError.getField(), userError.getMessage()));
+                    "signUpRequestDto", userError.getField(),
+                    getSignUpRejectedValue(userError.getField(), signUpRequestDto),
+                    false, null, null, userError.getMessage()
+            ));
             model.addAttribute("signInStatus", false);
             return "auth/sign-up";
         }
         redirectAttributes.addFlashAttribute("signUpSuccess", true);
         return "redirect:/users/sign-in";
+    }
+
+    private String getSignUpRejectedValue(final String field, final SignUpRequestDto signUpRequestDto) {
+        if (field.equals("email")) {
+            return signUpRequestDto.getEmail();
+        }
+        return null;
     }
 
     @GetMapping("/sign-in")

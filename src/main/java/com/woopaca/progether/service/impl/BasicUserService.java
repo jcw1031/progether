@@ -67,8 +67,7 @@ public class BasicUserService implements UserService {
     @Transactional
     public void userUpdate(final ProfileUpdateRequestDto profileUpdateRequestDto, final String token) {
         User user = jwtUtils.getUserOfToken(token);
-        Part part = profileUpdateRequestDto.getPart();
-        user.updateUserProfile(profileUpdateRequestDto, part);
+        user.updateUserProfile(profileUpdateRequestDto);
     }
 
     private void validateDuplicateEmail(final SignUpRequestDto signUpRequestDto) {

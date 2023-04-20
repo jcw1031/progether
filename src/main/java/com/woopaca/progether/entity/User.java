@@ -9,19 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.mindrot.jbcrypt.BCrypt;
 
-import javax.persistence.CascadeType;
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,11 +64,11 @@ public class User {
                 .build();
     }
 
-    public void updateUserProfile(ProfileUpdateRequestDto profileUpdateRequestDto, Part part) {
+    public void updateUserProfile(ProfileUpdateRequestDto profileUpdateRequestDto) {
         subject = profileUpdateRequestDto.getSubject();
         introduction = profileUpdateRequestDto.getIntroduction();
         website = profileUpdateRequestDto.getWebsite();
-        this.part = part;
+        part = profileUpdateRequestDto.getPart();
     }
 
     public UserProfileResponseDto toProfileDto() {
